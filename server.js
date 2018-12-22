@@ -33,15 +33,15 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
-var routes = require("./controllers/newsController.js");
+var routes = require("./controllers/newsController");
 app.use(routes);
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoNews";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MongoNews";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Start the server
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
-  });
+});

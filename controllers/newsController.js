@@ -12,8 +12,9 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Require Models
-var NewsArticle = require("../models/NewsArticle.js");
-var Comment = require("../models/Comment")
+var db = require("../models")
+// var NewsArticle = require("../models/NewsArticle.js");
+// var Comment = require("../models/Comment")
 
 // A GET route for scraping the website
 router.get("/scrape", function(req, res) {
@@ -41,14 +42,14 @@ router.get("/scrape", function(req, res) {
             
             // Create a new NewsArticle using the `result` object built from scraping
             db.NewsArticle.create(result)
-            .then(function(dbNewsArticle) {
-                // View the added result in the console
-                console.log(dbNewsArticle);
-            })
-            .catch(function(err) {
-                // If an error occurred, log it
-                console.log(err);
-            });
+                .then(function(dbNewsArticle) {
+                    // View the added result in the console
+                    console.log(dbNewsArticle);
+                })
+                .catch(function(err) {
+                    // If an error occurred, log it
+                    console.log(err);
+                });
         });
         // Send a message to the client
         res.send("Scrape Complete");
