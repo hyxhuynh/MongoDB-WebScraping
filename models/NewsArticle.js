@@ -12,10 +12,15 @@ var NewsArticleSchema = new Schema({
     type: String,
     required: true
   },
-  comment: [{
-    type: Schema.Types.ObjectId,
-    ref: "Comment"
-  }]
+  notes: [
+    {
+      type: Schema.Types.ObjectId,
+      // the ref property refer to the Note model
+      // name needs to be exact as the model file
+      // "Note" vs. Note.js
+      ref: "Note"
+    }
+  ]
 });
 
 var NewsArticle = mongoose.model("NewsArticle", NewsArticleSchema);

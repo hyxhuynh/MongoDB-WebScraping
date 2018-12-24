@@ -8,10 +8,7 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models
-// var db = require("./models");
-
-var PORT = 3000;
+var PORT = 5000;
 
 // Initialize Express
 var app = express();
@@ -37,7 +34,7 @@ var routes = require("./controllers/newsController");
 app.use(routes);
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MongoNews";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
@@ -45,3 +42,4 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
 });
+
