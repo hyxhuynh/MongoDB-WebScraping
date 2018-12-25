@@ -22,6 +22,12 @@ router.get("/scrape", function(req, res) {
         // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
         var $ = cheerio.load(response.data);
       
+        // Remove all documents from NewsArticle collection, then add new ones
+        db.NewsArticle.remove({}, function(err,removed) {
+            console.log(err);
+            console.log(removed);
+        });
+
         // With cheerio, find each p-tag with the "title" class
         // (i: iterator. element: the current element)
         $("h2.entry-title").each(function(i, element) {
@@ -37,6 +43,7 @@ router.get("/scrape", function(req, res) {
             result.link = $(element)
                 .children("a")
                 .attr("href");
+
             
             // Create a new NewsArticle using the `result` object built from scraping
             db.NewsArticle.create(result)
@@ -55,7 +62,7 @@ router.get("/scrape", function(req, res) {
 });
 
 // Route for getting all NewsArticles from the db
-router.get("/NewsArticles", function(req, res) {
+router.get("/api/NewsArticles", function(req, res) {
     // Grab every document in the NewsArticles collection
     db.NewsArticle.find({})
       .then(function(dbNewsArticle) {
@@ -69,7 +76,7 @@ router.get("/NewsArticles", function(req, res) {
   });
 
 // Route for grabbing a specific NewsArticle by ID, populate it with its note
-router.get("/NewsArticles/:id", function(req, res) {
+router.get("/api/NewsArticles/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in the db...
     db.NewsArticle.findOne({_id: req.params.id})
         //... and populate all of the notes associated with it
@@ -81,7 +88,7 @@ router.get("/NewsArticles/:id", function(req, res) {
 });
 
 // Route for saving/updating a NewsArticle's associated Note
-router.post("/NewsArticles/:id", function(req, res) {
+router.post("/api/NewsArticles/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
       .then(function(dbNote) {

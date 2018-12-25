@@ -28,6 +28,8 @@ var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+var handlebarsRouter = require("./routers/handlebars");
+handlebarsRouter(app);
 
 // Import routes and give the server access to them.
 var routes = require("./controllers/newsController");

@@ -1,0 +1,17 @@
+<h1 class="title">{{newsArticle.title}}</h1>
+<a href="{{newsArticle.link}}" class="btn btn-primary">Read Article</a>
+
+<form action="/api/NewsArticles/{{newsArticle.id}}" method="POST">
+  <input type="text" name="title" placeholder="Title">
+  <input type="text" name="body" placeholder="Note">
+  <input type="submit" value="Submit">
+</form> 
+
+{{#each newsArticle.notes}}    
+<div class="card w-75">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <p>{{this.body}}</p>
+  </div>
+</div>
+{{/each}}
