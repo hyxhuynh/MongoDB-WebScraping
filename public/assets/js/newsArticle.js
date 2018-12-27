@@ -1,8 +1,14 @@
-// Grab the news articles as a json
-// $.getJSON("/NewsArticles", function(data) {
-//     // For each one
-//     for (var i = 0; i < data.length; i++) {
-//         $("#article").append("<p data-id = '" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-//     }
-// })
-
+$(".saveArticle").on('click', function(event) {
+    var id = $(this).data('id');
+    var saveIt = $(this).data('set');
+  
+    $.ajax({
+      method: "POST",
+      url: "/api/NewsArticles/save/" + id,
+      data: {
+        save: saveIt,
+      }
+    }).then(function(data) {
+      location.reload();
+    });
+  });

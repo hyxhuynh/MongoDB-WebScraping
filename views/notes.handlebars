@@ -1,9 +1,15 @@
 <h1 class="title">{{newsArticle.title}}</h1>
-<a href="{{newsArticle.link}}" class="btn btn-primary">Read Article</a>
+<a href="{{newsArticle.link}}" target="_blank" class="btn btn-primary">Read Article</a>
 
-<form action="/api/NewsArticles/{{newsArticle.id}}" method="POST">
-  <input type="text" name="title" placeholder="Title">
-  <input type="text" name="body" placeholder="Note">
+{{#if newsArticle.saved }}
+  <button id="saveArticle" data-id="{{newsArticle.id}}" data-set="false" class="btn btn-primary">Delete From Saved</button>
+{{else}}
+  <button id="saveArticle" data-id="{{newsArticle.id}}" data-set="true" class="btn btn-primary">Save Article</button>
+{{/if}}
+
+<form id="addNote" data-id="{{newsArticle.id}}">
+  <input id="noteTitle" type="text" name="title" placeholder="Title">
+  <input id="noteBody" type="text" name="body" placeholder="Note">
   <input type="submit" value="Submit">
 </form> 
 
@@ -12,6 +18,9 @@
   <div class="card-body">
     <h5 class="card-title">{{this.title}}</h5>
     <p>{{this.body}}</p>
+    <button class="deleteNote" data-id="{{this.id}}">x</button>
   </div>
 </div>
 {{/each}}
+
+<script src="/assets/js/notes.js"></script>

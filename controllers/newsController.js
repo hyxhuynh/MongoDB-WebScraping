@@ -23,7 +23,7 @@ router.get("/scrape", function(req, res) {
         var $ = cheerio.load(response.data);
       
         // Remove all documents from NewsArticle collection, then add new ones
-        db.NewsArticle.remove({}, function(err,removed) {
+        db.NewsArticle.remove({ saved: false }, function(err,removed) {
             console.log(err);
             console.log(removed);
         });
@@ -87,6 +87,16 @@ router.get("/api/NewsArticles/:id", function(req, res) {
         });
 });
 
+router.post("/api/NewsArticles/save/:id", function(req, res) {
+    db.NewsArticle.findOneAndUpdate({_id: req.params.id }, { $set: { saved: req.body.save } }, { new: true }).then(function(data) {
+        // If we were able to successfully update an NewsArticle, send it back to the client
+        res.json(data);
+    }).catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+    });
+})
+
 // Route for saving/updating a NewsArticle's associated Note
 router.post("/api/NewsArticles/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
@@ -106,6 +116,15 @@ router.post("/api/NewsArticles/:id", function(req, res) {
         res.json(err);
       });
   });
+
+router.post("/api/Notes/delete/:id", function(req, res){
+    db.Note.deleteOne({_id: req.params.id }).then( function(deleted){
+      res.json(deleted);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
 
 module.exports = router;
 

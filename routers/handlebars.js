@@ -26,4 +26,15 @@ module.exports = function(app) {
             });
     }); 
 
+    app.get('/savedArticles', function(req, res) {
+
+        db.NewsArticle.find( { saved: true })
+            .then(function(dbNewsArticles) {
+                res.render('savedArticles', {newsArticles: dbNewsArticles});
+            })
+            .catch(function(err) {
+                res.render(err);
+            });
+    });
+
 }
