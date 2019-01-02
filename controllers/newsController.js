@@ -30,19 +30,26 @@ router.get("/scrape", function(req, res) {
 
         // With cheerio, find each p-tag with the "title" class
         // (i: iterator. element: the current element)
-        $("h2.entry-title").each(function(i, element) {
+        $("article").each(function(i, element) {
             // console.log("Element: ", element)
+
+            var titleElement = $(element).find("h2.entry-title");
+            var summaryElement = $(element).find("div.entry-summary");
 
             // Save an empty result object
             var result = {};
             
             // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(element)
+            result.title = titleElement
                 .children("a")
                 .text();
-            result.link = $(element)
+            result.link = titleElement
                 .children("a")
                 .attr("href");
+            result.summary = summaryElement
+                .children("p")
+                .text();
+            result.summary = result.summary.replace("… Read More", "…");
 
             
             // Create a new NewsArticle using the `result` object built from scraping

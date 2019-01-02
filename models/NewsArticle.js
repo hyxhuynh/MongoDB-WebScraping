@@ -12,6 +12,9 @@ var NewsArticleSchema = new Schema({
         type: String,
         required: true
     },
+    summary: {
+        type: String
+    },
     saved: {
         type: Boolean,
         default: false
