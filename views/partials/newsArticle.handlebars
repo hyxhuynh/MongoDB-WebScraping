@@ -1,15 +1,16 @@
-{{#each newsArticles}}    
-<div class="card w-75">
-  <div class="card-body">
-    <h5 class="card-title">{{this.title}}</h5>
-    <a href="/article/{{this.id}}" class="btn btn-primary">More</a>
-    {{#if this.saved }}
-      <button data-id="{{this.id}}" data-set="false" class="saveArticle btn btn-primary">Delete From Saved</button>
-    {{else}}
-      <button data-id="{{this.id}}" data-set="true" class="saveArticle btn btn-primary">Save Article</button>
-    {{/if}}
+<div class="main-container">
+  {{#each newsArticles}}    
+  <div class="card w-75">
+    <div class="card-body">
+      <h5 class="card-title">{{this.title}}</h5>
+      <a href="/article/{{this.id}}" class="btn btn-primary">More</a>
+      {{#if this.saved }}
+        <button data-id="{{this.id}}" data-set="false" class="saveArticle btn btn-primary">Delete From Saved</button>
+      {{else}}
+        <button data-id="{{this.id}}" data-set="true" class="saveArticle btn btn-primary">Save Article</button>
+      {{/if}}
+    </div>
   </div>
+  {{/each}}
 </div>
-{{/each}}
-
 <script src="/assets/js/newsArticle.js"></script>
