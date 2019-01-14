@@ -22,8 +22,8 @@ router.get("/scrape", function(req, res) {
         // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
         var $ = cheerio.load(response.data);
       
-        // Remove all documents from NewsArticle collection, then add new ones
-        db.NewsArticle.remove({ saved: false }, function(err,removed) {
+        // Remove all documents, which are NOT SAVED, from NewsArticle collection, then add new ones
+        db.NewsArticle.deleteMany({ saved: false }, function(err,removed) {
             console.log(err);
             console.log(removed);
         });
@@ -52,16 +52,30 @@ router.get("/scrape", function(req, res) {
             result.summary = result.summary.replace("… Read More", "…");
 
             
-            // Create a new NewsArticle using the `result` object built from scraping
-            db.NewsArticle.create(result)
-                .then(function(dbNewsArticle) {
-                    // View the added result in the console
-                    console.log(dbNewsArticle);
-                })
-                .catch(function(err) {
-                    // If an error occurred, log it
-                    console.log(err);
-                });
+            // Check if artile title or link is missing
+            if(result.title !== "" && result.link !== ""){
+                var titlesArray = [];
+                // Check if there is duplicate articles
+                if (titlesArray.indexOf(result.title) === -1) {
+                    titlesArray.push(result.title);
+                    console.log('TITLES ARRAY', titlesArray)
+                    // Create a new NewsArticle using the `result` object built from scraping
+                    db.NewsArticle.create(result)
+                        .then(function(dbNewsArticle) {
+                            // View the added result in the console
+                            console.log(dbNewsArticle);
+                        })
+                        .catch(function(err) {
+                            // If an error occurred, log it
+                            console.log(err);
+                        });
+                } else {
+                    console.log("Duplicate Articles");
+                }
+            } else {
+                console.log("Title or Link is missing!");
+            }
+    
         });
         // Send a message to the client
         // res.send("Scrape Complete");
