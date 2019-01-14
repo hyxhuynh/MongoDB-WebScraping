@@ -35,4 +35,6 @@ Or check out the app at: https://stark-plains-37976.herokuapp.com/
 <a name="display"></a>
 ## App Display
 
-![Demo](/public/assets/img/Eat-Da-Burger.png)
+![Demo](/public/assets/img/HomePage.png)
+![Demo](/public/assets/img/SavedList.png)
+![Demo](/public/assets/img/LearnMore.png)
