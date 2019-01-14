@@ -3,6 +3,20 @@ body {
   font-size: 20px;
 }
 
+.instruction {
+  text-align: center;
+}
+
+.card-body {
+  background-color: bisque;
+}
+
+.page-title {
+  color: maroon;
+  text-align: center;
+  font-weight: bold;
+}
+
 .nav-link {
   font-size: 20px;
   color: bisque;
